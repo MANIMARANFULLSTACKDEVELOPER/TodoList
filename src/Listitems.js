@@ -1,22 +1,40 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import './ListItems.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FlipMove from 'react-flip-move';
 
-function Listitems(props) {
-  const items = props.item;
-  const Listitems = items.map(item =>{
-    return<div className='list' key = "item.key">
-      <p>{item.text}</p>
-      <span>
-        <FontAwesomeIcon className='faicon' icon='trash'/>
-      </span>
-    </div>
-  })
-  return (
-    <div>Listitems</div>
-  )
+function ListItems(props) {
+    const items = props.items;
+    const listItems = items.map(item => {
+        return (
+            <FlipMove >
+            <div className='list' key={item.key}>
+                <p>
+                    <input type="text"
+                        id={item.key}
+                        value={item.text}
+                        onChange={
+                            (e) => {
+                                props.setUpdate(e.target.value,item.key)
+                            }
+                        }
+                    
+                    />
+                 <span>
+                        <FontAwesomeIcon className="faicon" icon='trash'
+                            onClick={ () => props.deleteItem(item.key)
+                         }
+                        />
+                 </span>
+                </p>
+            </div>
+            </FlipMove>
+        )
+    })
+    return (
+        <div>
+            {listItems}
+        </div>
+    )
 }
-
-Listitems.propTypes = {}
-
-export default Listitems
+export default ListItems
